@@ -1,0 +1,7 @@
+# log.yml
+LOG:
+  FILES:
+    - FILENAME: '/var/log/nas_scraper.log'
+      MODE: w
+      LEVEL: INFO
+  STDERR: DEBUG

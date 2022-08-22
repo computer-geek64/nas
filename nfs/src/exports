@@ -1,0 +1,4 @@
+/data/nas/family 192.168.0.0/24(rw,sync,all_squash,anonuid=33,anongid=33)
+/data/nas/users/ashish 192.168.0.0/24(rw,sync,all_squash,anonuid=33,anongid=33)
+/data/nas/users/melvin 192.168.0.0/24(rw,sync,all_squash,anonuid=33,anongid=33)
+/data/nas/users/joy 192.168.0.0/24(rw,sync,all_squash,anonuid=33,anongid=33)

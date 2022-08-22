@@ -1,0 +1,8 @@
+# movies.yml
+MOVIES:
+  EXTENSIONS:
+    VIDEOS:
+      - .mp4
+    SUBTITLES:
+      - .vtt
+      - .srt

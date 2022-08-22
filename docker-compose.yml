@@ -72,9 +72,6 @@ services:
         source: /etc/localtime
         target: /etc/localtime
         read_only: true
-      - type: bind
-        source: /home/ashish/Videos
-        target: /data/videos
     networks:
       - nas
   scraper:

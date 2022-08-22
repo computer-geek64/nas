@@ -103,10 +103,23 @@ services:
         read_only: true
     networks:
       - nas
+  postgres:
+    container_name: nas-postgres
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+    networks:
+      - nas
 
 volumes:
   redis-data:
     name: nas-redis-data
+    external: true
+  postgres-data:
+    name: nas-postgres-data
     external: true
 
 networks:

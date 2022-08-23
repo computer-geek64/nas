@@ -17,6 +17,9 @@ services:
       - type: bind
         source: /data/nas/windows_backup
         target: /data/windows_backup
+      - type: volume
+        source: samba-data
+        target: /var/lib/samba
       - type: bind
         source: /etc/localtime
         target: /etc/localtime
@@ -117,6 +120,9 @@ volumes:
     external: true
   postgres-data:
     name: nas-postgres-data
+    external: true
+  samba-data:
+    name: nas-samba-data
     external: true
 
 networks:

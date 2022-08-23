@@ -12,6 +12,7 @@ chown -R 33:33 /data/nas/windows_backup
 docker pull nextcloud
 docker pull postgres
 
+docker volume create nas-samba-data
 docker volume create nas-redis-data
 docker volume create nas-postgres-data
 
@@ -39,13 +40,16 @@ docker container stop postgres
 docker network rm nas-nextcloud-postgres
 
 docker-compose build --no-cache
-docker-compose up -d samba
+
+docker run -d --network=none -v nas-samba-data:/data --name samba --rm nas_samba
 
 echo "Set ashish's password:"
-docker container exec -it nas-samba smbpasswd -a ashish
+docker container exec -it samba smbpasswd -a ashish
 echo "Set melvin's password:"
-docker container exec -it nas-samba smbpasswd -a melvin
+docker container exec -it samba smbpasswd -a melvin
 echo "Set joy's password:"
-docker container exec -it nas-samba smbpasswd -a joy
+docker container exec -it samba smbpasswd -a joy
 
-docker-compose down
+docker container exec -it samba sh -c 'mv /var/lib/samba/* /data'
+
+docker container stop samba

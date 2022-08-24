@@ -38,7 +38,7 @@ services:
     networks:
       - nas
     ports:
-      - "80:80"
+      - "8080:80"
   nextcloud:
     container_name: nas-nextcloud
     build:

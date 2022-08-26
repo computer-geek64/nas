@@ -38,7 +38,7 @@ services:
     networks:
       - nas
     ports:
-      - "8080:80"
+      - "8080:8080"
   nextcloud:
     container_name: nas-nextcloud
     build:
@@ -47,8 +47,8 @@ services:
     labels:
       autoheal: true
     volumes:
-      - type: bind
-        source: /data/nas/nextcloud
+      - type: volume
+        source: nextcloud-data
         target: /var/www/html
       - type: bind
         source: /data/nas/users/ashish
@@ -111,18 +111,25 @@ services:
       - type: volume
         source: postgres-data
         target: /var/lib/postgresql/data
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
     networks:
       - nas
 
 volumes:
+  samba-data:
+    name: nas-samba-data
+    external: true
+  nextcloud-data:
+    name: nas-nextcloud-data
+    external: true
   redis-data:
     name: nas-redis-data
     external: true
   postgres-data:
     name: nas-postgres-data
-    external: true
-  samba-data:
-    name: nas-samba-data
     external: true
 
 networks:

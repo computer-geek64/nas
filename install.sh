@@ -13,21 +13,22 @@ docker pull nextcloud
 docker pull postgres
 
 docker volume create nas-samba-data
+docker volume create nas-nextcloud-data
 docker volume create nas-redis-data
 docker volume create nas-postgres-data
 
 POSTGRES_PASSWORD="$(uuidgen -r)"
 docker network create nas-nextcloud-postgres
 docker run -d --network=nas-nextcloud-postgres -e "POSTGRES_DB=nextcloud" -e "POSTGRES_USER=nextcloud" -e "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" -v nas-postgres-data:/var/lib/postgresql/data --name postgres --rm postgres
-docker run -d --network=nas-nextcloud-postgres -p 80:80 -e "POSTGRES_HOST=postgres" -e "POSTGRES_DB=nextcloud" -e "POSTGRES_USER=nextcloud" -e "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" -v /data/nas/nextcloud:/var/www/html -v /data/nas/users:/data/users --name nextcloud --rm nextcloud
+docker run -d --network=nas-nextcloud-postgres -p 80:80 -e "POSTGRES_HOST=postgres" -e "POSTGRES_DB=nextcloud" -e "POSTGRES_USER=nextcloud" -e "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" -v nas-nextcloud-data:/var/www/html -v /data/nas/users:/data/users --name nextcloud --rm nextcloud
 
-echo "Open http://nas.dso/ and create a Nextcloud account for each user (and login too)"
+echo "Open https://nas.homelab.net/ and create a Nextcloud account for each user (and login too)"
 echo "Edit config/config.php and add 'nextcloud' to 'trusted_domains'"
 echo "Add the following lines as well:"
-echo "'overwritehost' => 'nas.dso',"
-echo "'overwriteprotocol' => 'http',"
+echo "'overwritehost' => 'nas.homelab.net',"
+echo "'overwriteprotocol' => 'https',"
 echo "'overwritewebroot' => '/nextcloud',"
-echo "'overwrite.cli.url' => 'http://nas.dso/nextcloud',"
+echo "'overwrite.cli.url' => 'https://nas.homelab.net/nextcloud',"
 echo "'filesystem_check_changes' => 1,"
 read -p 'Press enter when ready to proceed...'
 
